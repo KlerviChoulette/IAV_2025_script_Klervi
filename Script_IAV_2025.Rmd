@@ -11,9 +11,9 @@ output:
 Ce script permet de faire tourner le calcul de l'Indice Avifaune Vivante (IAV) depuis un jeu de données.
 
 
+Remplacer par le chemin d'accès du jeu de données.  
 
 ```{r}
-# Remplacer par le chemin d'accès du jeu de données 
 path_data = "C:/Users/choul/Desktop/Work/Master/MODE_Rennes/M2/Stage/Stage_IAV/Stage_IAV/Table_reference_IAV_BFC_vall.csv"
 ```
 
@@ -917,6 +917,7 @@ res_domaine <- calcul_indicateur(
 
 Création des graphiques (à personnaliser).  
 
+Pour le premier, il permet de récupérer les graphiques individuellements (il suffit de remplacer "agricole" par un autre domaine).
 
 ```{r}
 ggplot(res_domaine$leverage%>%filter(domaine.alauda_2016 == "agricole"),
@@ -1239,7 +1240,7 @@ ggplot(res_cavicole$Ifinal,
   scale_color_manual(values = color_cavicole, name = NULL)+
   scale_fill_manual(values = color_cavicole, name = NULL)+
   
-  facet_wrap(~cavicole,# scales = "free_y",
+  facet_wrap(~cavicole,ncol = 2, #scales = "free_y",
              labeller = labeller(
                cavicole = c(
                  oui = paste("Cavicole (", res_cavicole$nb_sp_max$non, " espèces)", sep = "" ),
@@ -1271,7 +1272,7 @@ res_colonial <- calcul_indicateur(
 ```
 
 
-```{r, fig.width= 7, fig.height=4}
+```{r, fig.width= 10, fig.height=4}
 ggplot(res_colonial$Ifinal,
        aes(x = as.numeric(year), y = LPI_final)) +
   geom_line(data = res_colonial$leverage,
